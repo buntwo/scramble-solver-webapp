@@ -1,0 +1,8 @@
+mults[] values:
+0 = nothing
+1 = double word
+2 = triple word
+3 = double letter
+6 = triple letter
+
+words in WORDS have qu replaced with q, since in game qu is one tile, and there are no English words that have q not followed by u.
