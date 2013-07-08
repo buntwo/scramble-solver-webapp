@@ -49,7 +49,7 @@ def solve(line):
         score = 0
         dw, tw = False, False
         for i in path:
-            score += LETTER_VALS[board_[i]] * (mults[i] // 3 + 1)
+            score += LETTER_VALS[board[i]] * (mults[i] // 3 + 1)
             if mults[i] == 1:
                 dw = True
             elif mults[i] == 2:
@@ -100,4 +100,4 @@ def solve(line):
     found.sort(key=attrgetter('word'))
     found.sort(key=attrgetter('score'), reverse=True)
 
-    return found, board_, mults
+    return found, board, mults

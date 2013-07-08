@@ -1,6 +1,6 @@
 BOARD_DIMENSION = 4
 BOARD_SIZE = BOARD_DIMENSION ** 2
-LETTER_VALS = {'k': 5, 'j': 10, 'i': 1, 'h': 3, 'o': 1, 'n': 2, 'm': 4, 'l': 2, 'c': 4, 'b': 4, 'a': 1, 'g': 3, 'f': 4, 'e': 1, 'd': 2, 'z': 10, 'y': 3, 'x': 8, 's': 1, 'r': 1, 'qu': 10, 'p': 4, 'w': 4, 'v': 5, 'u': 2, 't': 1}
+LETTER_VALS = {'k': 5, 'j': 10, 'i': 1, 'h': 3, 'o': 1, 'n': 2, 'm': 4, 'l': 2, 'c': 4, 'b': 4, 'a': 1, 'g': 3, 'f': 4, 'e': 1, 'd': 2, 'z': 10, 'y': 3, 'x': 8, 's': 1, 'r': 1, 'q': 10, 'p': 4, 'w': 4, 'v': 5, 'u': 2, 't': 1}
 #                  1  2  3  4  5  6   7   8   9  10  11  12  13  14  15  16
 LENGTH_BONUS = [0, 0, 0, 0, 0, 3, 6, 10, 15, 20, 20, 20, 20, 20, 20, 20, 20]
 WORDS = [
@@ -50277,8 +50277,8 @@ WORDS = [
 'eqivocators',
 'eqivoke',
 'eqivokes',
-'eqivoque',
-'eqivoques',
+'eqivoqe',
+'eqivoqes',
 'er',
 'era',
 'eradiate',
@@ -122005,12 +122005,12 @@ WORDS = [
 'qinone',
 'qinones',
 'qinonoid',
-'qinquennia',
-'qinquennial',
-'qinquennially',
-'qinquennials',
-'qinquennium',
-'qinquenniums',
+'qinqennia',
+'qinqennial',
+'qinqennially',
+'qinqennials',
+'qinqennium',
+'qinqenniums',
 'qins',
 'qinsies',
 'qinsy',
@@ -144733,10 +144733,10 @@ WORDS = [
 'sqooshiest',
 'sqooshing',
 'sqooshy',
-'sqush',
-'squshed',
-'squshes',
-'squshing',
+'sqsh',
+'sqshed',
+'sqshes',
+'sqshing',
 'sraddha',
 'sraddhas',
 'sradha',

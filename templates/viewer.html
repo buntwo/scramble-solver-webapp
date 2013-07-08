@@ -8,7 +8,11 @@ var words = {{ words|tojson|safe }};
 var boardL = {{ board|tojson|safe }};
 var mults = {{ mults|tojson|safe }};
 var LETTER_VALS = {{ lettervals|tojson|safe }};
-board = boardL.toUpperCase();
+var index = boardL.indexOf('q');
+board = boardL.toUpperCase().split('');
+if (index != -1) {
+    board[index] = 'Qu';
+}
 var wordNum = 0; // index into words
 
 // draw grid and letters
