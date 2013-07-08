@@ -16,14 +16,15 @@ def solve():
         line = request.form['input'].strip()
         if not solver.valid(line):
             return render_template('badinput.html')
-        #words = solver.solve(line)
+        words = solver.solve(line)
         board = re.sub(r'[/?]', '', line)
-        #return render_template('viewer.html', words=[ x.__dict__ for x in words], board=board)
-        return render_template('viewer.html', words=[ x.__dict__ for x in [solver.Word("apple", 50, [1,3,14]), solver.Word("banana", 10, [1,5,10,15,2])]], board=board)
+        return render_template('viewer.html', words=[ x.__dict__ for x in words], board=board)
+        #return render_template('viewer.html', words=[ x.__dict__ for x in [solver.Word("apple", 50, [1,3,14]), solver.Word("banana", 10, [1,5,10,15,2])]], board=board)
     elif request.method == 'GET':
         return 'Oops!'
 
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    #app.run(debug=True)
+    app.run()
