@@ -73,7 +73,7 @@ def solve(line):
     # recursive function
     def find_paths(word, visited, can_go, path, level):
         if len(word) == level:
-            return [Word(get_word(path), get_score(path), path)]
+            return [Word(get_word(path), get_score(path), list(path))]
 
         words = []
         for i in range(BOARD_SIZE):
@@ -93,7 +93,7 @@ def solve(line):
 
     found = []
     for word in WORDS:
-        words = find_paths(word, [False] * BOARD_SIZE, [True] * BOARD_SIZE, [''] * len(word), 0)
+        words = find_paths(word, [False] * BOARD_SIZE, [True] * BOARD_SIZE, [0] * len(word), 0)
         if len(words) != 0:
             found.append(max(words, key=attrgetter('score')))
 

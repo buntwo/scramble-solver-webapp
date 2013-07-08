@@ -31,7 +31,7 @@ function drawBg(ctx) {
     ctx.textBaseline = 'middle';
     for (i = 0; i < 4; ++i) {
         for (var j = 0; j < 4; ++j) {
-            ctx.fillText(board[4*i + j], 52 + 100*i, 54 + 100*j);
+            ctx.fillText(board[4*i + j], 52 + 100*j, 54 + 100*i);
         }
     }
 }
@@ -108,10 +108,12 @@ $(function() {
 </script>
 {% endblock %}
 {% block content %}
-<div class="center">
+<div class="column" id="center">
 <canvas id="viewer" width="404px" height="550px">
     Oh no, your browser doesn't support canvas!
 </canvas>
 </div>
 
+<div class="column" id="left"></div>
+<div class="column" id="right"></div>
 {% endblock %}
