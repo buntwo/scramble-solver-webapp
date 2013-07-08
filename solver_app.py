@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def view():
-    return render_template('input.html')
+    return render_template('input.html', lettervals=solver.LETTER_VALS)
 
 @app.route('/solve', methods=['GET', 'POST'])
 def solve():

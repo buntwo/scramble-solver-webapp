@@ -61,7 +61,7 @@ function drawBg(ctx) {
     ctx.textBaseline = 'top';
     for (i = 0; i < 4; ++i) {
         for (var j = 0; j < 4; ++j) {
-            ctx.fillText(LETTER_VALS[boardL[4*i + j]], WIDTH*(j + 1) - 4, 5 + START + WIDTH*i);
+            ctx.fillText(LETTER_VALS[boardL[4*i + j]], START + WIDTH*(j + 1) - 4, 5 + START + WIDTH*i);
         }
     }
 
@@ -121,7 +121,7 @@ function redraw(ctx) {
 
 
 $(function() {
-    var canvas = document.getElementById('viewer');
+    var canvas = $('#viewer')[0];
     var ctx = canvas.getContext('2d');
 
     // draw shadow

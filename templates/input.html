@@ -1,6 +1,111 @@
 {% extends "base.html" %}
 {% block head %}
 {{ super() }}
+<script type="text/javascript" src="/static/jquery.js"></script>
+<script type="text/javascript">
+var LETTER_VALS = {{ lettervals|tojson|safe }};
+var START = 25;
+var END = 425;
+var WIDTH = 100;
+var boardPart= /^(?:[a-z][\/?]{0,2}){0,16}$/;
+var boardPartExec = /(?:([a-z])([\/?]{0,2}))/g;
+var boardFull = /(?:[a-z][\/?]{0,2}){16}/;
+var mults = { '': '', '/': 'DL', '//': 'TL', '?': 'DW', '??': 'TW' };
+
+// draw grid and letters
+function drawBoard(board, ctx) {
+    ctx.clearRect(START - 2,START - 2, WIDTH*4 + 4,WIDTH*4 + 4);
+    // grid
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'square';
+    ctx.beginPath();
+    for (var i = START; i <= END; i += WIDTH) {
+        ctx.moveTo(START, i);
+        ctx.lineTo(END, i);
+        ctx.moveTo(i, START);
+        ctx.lineTo(i, END);
+
+    }
+    ctx.stroke();
+    ctx.closePath();
+
+    var i = 0;
+    var letter;
+    while ((letter = boardPartExec.exec(board)) !== null) {
+        console.log(letter);
+        // letter
+        ctx.font = '40pt Cantarell';
+        ctx.fillStyle = '#000';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(letter[1] == 'q' ? 'Qu' : letter[1].toUpperCase(), WIDTH/2 + START +  + WIDTH*col(i), WIDTH/2 + START + WIDTH*row(i));
+        // modifier
+        ctx.font = '12pt Cantarell';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.fillText(mults[letter[2]], 6 + START + WIDTH*col(i), 5 + START + WIDTH*row(i));
+        // points
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'top';
+        ctx.fillText(LETTER_VALS[letter[1]], START + WIDTH*(col(i) + 1) - 4, 5 + START + WIDTH*row(i));
+        
+        ++i;
+    }
+
+}
+
+function row(i) {
+    return ~~(i / 4);
+}
+
+function col(i) {
+    return i % 4;
+}
+
+function drawShadow(color, ctx) {
+    ctx.clearRect(0,0,450,450);
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.shadowColor = color;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    ctx.shadowBlur = 15;
+    ctx.lineWidth = 10;
+    ctx.strokeRect(25,25,400,400);
+    ctx.shadowColor = 'rgba(0,0,0,0)';
+    ctx.shadowBlur = 0;
+    ctx.globalCompositeOperation = 'source-over';
+}
+
+var goodLine = '';
+
+$(function() {
+    var canvas = $('#preview')[0];
+    var ctx = canvas.getContext('2d');
+
+    drawShadow('#000', ctx);
+
+    drawBoard('', ctx);
+
+    $('#board').bind('input', function() {
+        var line = $(this).val().toLowerCase();
+        if (!boardPart.test(line)) {
+            console.log('bad');
+            drawShadow('#f00', ctx);
+            drawBoard(goodLine, ctx);
+        } else {
+            if (boardFull.test(line)) {
+                drawShadow('#0f0', ctx);
+            } else {
+                drawShadow('#000', ctx);
+            }
+            goodLine = line;
+            drawBoard(line, ctx);
+        }
+    });
+});
+
+</script>
 <link rel="stylesheet" type="text/css" href="/static/input.css">
 {% endblock %}
 {% block content %}
@@ -14,10 +119,13 @@
     <div>
 
         <form action="/solve" method="post">
-            <input class="center_form" name='input' type="text" autofocus required><br>
+            <input class="center_form" id="board" name='input' type="text" autofocus required><br>
             <input class="center_submit" type="submit" value="Solve!">
         </form>
 
+        <canvas id="preview" width="450" height="450">
+            Oh no, your browser doesn't support canvas!
+        </canvas>
     </div>
 </div>
 {% endblock %}
