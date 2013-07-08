@@ -7,10 +7,11 @@ var LETTER_VALS = {{ lettervals|tojson|safe }};
 var START = 25;
 var END = 425;
 var WIDTH = 100;
-var boardPart= /^(?:[a-z][\/?]{0,2}){0,16}$/;
+var boardPart= /^(?:[a-z](?:\?|\?\?|\/|\/\/|)){0,16}$/;
 var boardPartExec = /(?:([a-z])([\/?]{0,2}))/g;
-var boardFull = /(?:[a-z][\/?]{0,2}){16}/;
+var boardFull = /^(?:[a-z](?:\?|\?\?|\/|\/\/|)){16}$/;
 var mults = { '': '', '/': 'DL', '//': 'TL', '?': 'DW', '??': 'TW' };
+var goodLine = '';
 
 // draw grid and letters
 function drawBoard(board, ctx) {
@@ -47,7 +48,7 @@ function drawBoard(board, ctx) {
         // points
         ctx.textAlign = 'right';
         ctx.textBaseline = 'top';
-        ctx.fillText(LETTER_VALS[letter[1]], START + WIDTH*(col(i) + 1) - 4, 5 + START + WIDTH*row(i));
+        ctx.fillText(LETTER_VALS[letter[1]], START + WIDTH*(col(i) + 1) - 5, 5 + START + WIDTH*row(i));
         
         ++i;
     }
@@ -76,7 +77,9 @@ function drawShadow(color, ctx) {
     ctx.globalCompositeOperation = 'source-over';
 }
 
-var goodLine = '';
+function validate() {
+    return boardFull.test($('#board').val());
+}
 
 $(function() {
     var canvas = $('#preview')[0];
@@ -87,7 +90,7 @@ $(function() {
     drawBoard('', ctx);
 
     $('#board').bind('input', function() {
-        var line = $(this).val().toLowerCase();
+        var line = $(this).val();
         if (!boardPart.test(line)) {
             drawShadow('#f00', ctx);
             drawBoard(goodLine, ctx);
@@ -111,12 +114,12 @@ $(function() {
 <div class="column" id="center">
 
     <div class="instr">
-        Enter the letters of the board, going left to right, then top to bottom. If the letter is a double letter, type a '/' after it, if it's a triple letter, type a '//' after it. If the letter is a double word, type a '?' after it, if it's a triple word type a '??' after it.
+        Enter the letters of the board, going left to right, then top to bottom. If the letter is a double letter, type a '/' after it, if it's a triple letter, type a '//' after it. If the letter is a double word, type a '?' after it, if it's a triple word type a '??' after it.<br><br>Lowercase letters please.
     </div>
 
     <div>
 
-        <form action="/solve" method="post">
+        <form action="/view_solutions" method="get" onsubmit="return validate();">
             <input class="center_form" id="board" name='input' type="text" autofocus required><br>
             <input class="center_submit" type="submit" value="Solve!">
         </form>

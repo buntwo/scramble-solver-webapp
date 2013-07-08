@@ -1,9 +1,18 @@
-.mono {
-    font-family: "DejaVu Sans Mono", monospace;
+.loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 300px;
+    text-align: center;
+    vertical-align: middle;
+    margin-left: -200px;
+    margin-top: -150px;
+    font-size: 50pt;
 }
 
-#stats {
-    padding-left: 0px;
+.mono {
+    font-family: "DejaVu Sans Mono", monospace;
 }
 
 #left {
@@ -21,6 +30,10 @@
 
 #controls>ul {
     list-style-type: none;
+}
+
+#stats {
+    padding-left: 0px;
 }
 
 #viewer {

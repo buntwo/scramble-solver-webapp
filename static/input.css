@@ -11,7 +11,7 @@
 
 .instr {
     text-align: center;
-    padding-bottom: 50px;
+    padding-bottom: 40px;
 }
 
 .container {
@@ -21,5 +21,5 @@
 }
 
 #preview {
-    padding-top: 50px;
+    padding-top: 30px;
 }

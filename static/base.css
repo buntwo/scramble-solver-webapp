@@ -1,14 +1,14 @@
 body {
     font-family: Cantarell, Ubuntu, sans-serif;
     margin: 0;
-    padding-left: 30%;    /* LC fullwidth */
-    padding-right: 30%;   /* RC fullwidth + CC padding */
-    min-width: 30%;       /* LC fullwidth + CC padding */
+    padding-left: 25%;    /* LC fullwidth */
+    padding-right: 25%;   /* RC fullwidth + CC padding */
+    min-width: 25%;       /* LC fullwidth + CC padding */
 }
 
 #header, #footer {
-    margin-left: -30%;    /* LC fullwidth */
-    margin-right: -30%;   /* RC fullwidth + CC padding */
+    margin-left: -25%;    /* LC fullwidth */
+    margin-right: -25%;   /* RC fullwidth + CC padding */
 }
 
 .column {
@@ -23,14 +23,14 @@ body {
 }
 
 #left {
-    width: 30%;           /* LC width */
+    width: 25%;           /* LC width */
     padding: 60px 10px 0 10px;        /* LC padding */
-    right: 30%;           /* LC fullwidth + CC padding */
+    right: 25%;           /* LC fullwidth + CC padding */
     margin-left: -100%;
 }
 
 #right {
-    width: 30%;           /* RC width */
+    width: 25%;           /* RC width */
     padding: 60px 10px 0 10px;        /* RC padding */
     margin-right: -100%;
 }

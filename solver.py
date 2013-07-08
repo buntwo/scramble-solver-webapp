@@ -19,6 +19,30 @@ def valid(line):
     else:
         return True
 
+
+def extract_board(line):
+    """
+    From the given board input, extract the printable multipliers and board
+    """
+    letter_patt = r'([a-z])([/?]{0,2})'
+    split = re.findall(letter_patt, line)
+    # compute multipliers
+    # clever scheme:
+    # 0 = nothing
+    # 1 = double word
+    # 2 = triple word
+    # 3 = double letter
+    # 6 = triple letter
+    board = [ x[0] for x in split ]
+    mults = [ { '/': 'DL',
+                '//': 'TL',
+                '?': 'DW',
+                '??': 'TW',
+                '': '',
+                }[x[1]] for x in split ]
+    return board, mults
+
+
 # expects a valid, stripped board, lowercase
 def solve(line):
     letter_patt = r'([a-z])([/?]{0,2})'
@@ -100,4 +124,4 @@ def solve(line):
     found.sort(key=attrgetter('word'))
     found.sort(key=attrgetter('score'), reverse=True)
 
-    return found, board, mults
+    return found
