@@ -5,6 +5,7 @@
 <script type="text/javascript" src="/static/jquery.js"></script>
 <script type="text/javascript">
 var line = {{ line|tojson|safe }};
+var sortby = {{ sortby|tojson|safe }};
 var boardL = {{ board|tojson|safe }};
 var mults = {{ mults|tojson|safe }};
 var LETTER_VALS = {{ lettervals|tojson|safe }};
@@ -149,7 +150,7 @@ $(function() {
     }
 
     // ajax in the solutions
-    $.getJSON('/solve', { 'line': line })
+    $.getJSON('/solve', { 'line': line, 'sortby': sortby })
     .done(function(json) {
         loadData(json);
         })

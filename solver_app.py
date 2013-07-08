@@ -13,18 +13,21 @@ def input():
 @app.route('/view_solutions')
 def view_solns():
     line = request.args.get('input', '', type=str)
+    sort = request.args.get('sortby', 'scoreD', type=str)
     board, mults = solver.extract_board(line)
     data = { 'board': ''.join(board),
              'mults': mults,
              'lettervals': solver.LETTER_VALS,
              'line': line,
+             'sortby': sort,
            }
     return render_template('viewer.html', **data)
 
 @app.route('/solve')
 def solve():
     line = request.args.get('line', '', type=str)
-    words = solver.solve(line)
+    sort = request.args.get('sortby', 'scoreD', type=str)
+    words = solver.solve(line, sort)
     data = { 'words': [ x.__dict__ for x in words], }
 
     return jsonify(data)

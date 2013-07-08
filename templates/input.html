@@ -89,6 +89,9 @@ $(function() {
 
     drawBoard('', ctx);
 
+    // check sort button
+    $('input:radio[name=sortby]')[0].checked = true;
+
     $('#board').bind('input', function() {
         var line = $(this).val();
         if (!boardPart.test(line)) {
@@ -120,7 +123,12 @@ $(function() {
     <div>
 
         <form action="/view_solutions" method="get" onsubmit="return validate();">
-            <input class="center_form" id="board" name='input' type="text" autofocus required><br>
+            <input class="center_form" id="board" name='input' type="text" autofocus required><br><br>
+            Sort:<br>
+            <input type="radio" name="sortby" value="scoreD">Descending by score<br>
+            <input type="radio" name="sortby" value="scoreA">Ascending by score<br>
+            <input type="radio" name="sortby" value="lengthD">Descending by length<br>
+            <input type="radio" name="sortby" value="lengthA">Ascending by length<br>
             <input class="center_submit" type="submit" value="Solve!">
         </form>
 

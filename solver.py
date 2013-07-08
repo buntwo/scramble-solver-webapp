@@ -44,7 +44,8 @@ def extract_board(line):
 
 
 # expects a valid, stripped board, lowercase
-def solve(line):
+# sort is a string: score[DA], length[DA]
+def solve(line, sort):
     letter_patt = r'([a-z])([/?]{0,2})'
     split = re.findall(letter_patt, line)
     # compute multipliers
@@ -119,9 +120,23 @@ def solve(line):
     for word in WORDS:
         words = find_paths(word, [False] * BOARD_SIZE, [True] * BOARD_SIZE, [0] * len(word), 0)
         if len(words) != 0:
-            found.append(max(words, key=attrgetter('score')))
+            if sort == 'scoreD':
+                elt = max(words, key=attrgetter('score'))
+            elif sort == 'scoreA':
+                elt = min(words, key=attrgetter('score'))
+            elif sort == 'lengthD':
+                elt = max(words, key=lambda x: len(x.word))
+            elif sort == 'lengthA':
+                elt = min(words, key=lambda x: len(x.word))
+            found.append(elt)
 
-    found.sort(key=attrgetter('word'))
-    found.sort(key=attrgetter('score'), reverse=True)
+    if sort == 'scoreD':
+        found.sort(key=attrgetter('score'), reverse=True)
+    elif sort == 'scoreA':
+        found.sort(key=attrgetter('score'))
+    elif sort == 'lengthD':
+        found.sort(key=lambda x: len(x.word), reverse=True)
+    elif sort == 'lengthA':
+        found.sort(key=lambda x: len(x.word))
 
     return found
