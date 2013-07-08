@@ -14,6 +14,9 @@ if (index != -1) {
     board[index] = 'Qu';
 }
 var wordNum = 0; // index into words
+var START = 25;
+var END = 425;
+var WIDTH = 100;
 
 // draw grid and letters
 function drawBg(ctx) {
@@ -22,11 +25,11 @@ function drawBg(ctx) {
     ctx.lineWidth = 4;
     ctx.lineCap = 'square';
     ctx.beginPath();
-    for (var i = 2; i <= 402; i += 100) {
-        ctx.moveTo(2, i);
-        ctx.lineTo(402, i);
-        ctx.moveTo(i, 2);
-        ctx.lineTo(i, 402);
+    for (var i = START; i <= END; i += WIDTH) {
+        ctx.moveTo(START, i);
+        ctx.lineTo(END, i);
+        ctx.moveTo(i, START);
+        ctx.lineTo(i, END);
 
     }
     ctx.stroke();
@@ -39,7 +42,7 @@ function drawBg(ctx) {
     ctx.textBaseline = 'middle';
     for (i = 0; i < 4; ++i) {
         for (var j = 0; j < 4; ++j) {
-            ctx.fillText(board[4*i + j], 52 + 100*j, 54 + 100*i);
+            ctx.fillText(board[4*i + j], WIDTH/2 + START +  + WIDTH*j, WIDTH/2 + START + WIDTH*i);
         }
     }
 
@@ -49,7 +52,7 @@ function drawBg(ctx) {
     ctx.textBaseline = 'top';
     for (i = 0; i < 4; ++i) {
         for (var j = 0; j < 4; ++j) {
-            ctx.fillText(mults[4*i + j], 8 + 100*j, 7 + 100*i);
+            ctx.fillText(mults[4*i + j], 6 + START + WIDTH*j, 5 + START + WIDTH*i);
         }
     }
 
@@ -58,7 +61,7 @@ function drawBg(ctx) {
     ctx.textBaseline = 'top';
     for (i = 0; i < 4; ++i) {
         for (var j = 0; j < 4; ++j) {
-            ctx.fillText(LETTER_VALS[boardL[4*i + j]], 96 + 100*j, 7 + 100*i);
+            ctx.fillText(LETTER_VALS[boardL[4*i + j]], WIDTH*(j + 1) - 4, 5 + START + WIDTH*i);
         }
     }
 
@@ -72,10 +75,10 @@ function drawWord(ctx) {
     ctx.globalCompositeOperation = 'destination-over';
     // green starting square
     ctx.fillStyle = '#00FF00';
-    ctx.fillRect(4 + 100 * col(path[0]), 4 + 100 * row(path[0]), 96, 96);
+    ctx.fillRect(START + 2 + WIDTH * col(path[0]), START + 2 + WIDTH * row(path[0]), WIDTH - 4, WIDTH - 4);
     // red ending square
     ctx.fillStyle = '#FF0000';
-    ctx.fillRect(4 + 100 * col(path[path.length - 1]), 4 + 100 * row(path[path.length - 1]), 96, 96);
+    ctx.fillRect(START + 2 + WIDTH * col(path[path.length - 1]), START + 2 + WIDTH * row(path[path.length - 1]), WIDTH - 4, WIDTH - 4);
     // restore gCO
     ctx.globalCompositeOperation = 'source-over';
 
@@ -86,8 +89,8 @@ function drawWord(ctx) {
     for (var i = 0; i < path.length - 1; ++i) {
         from = path[i];
         to = path[i + 1];
-        ctx.moveTo(52 + 100 * col(from), 52 + 100 * row(from));
-        ctx.lineTo(52 + 100 * col(to), 52 + 100 * row(to));
+        ctx.moveTo(START + 2 + WIDTH/2 + WIDTH * col(from), START + 2 + WIDTH/2 + WIDTH * row(from));
+        ctx.lineTo(START + 2 + WIDTH/2 + WIDTH * col(to), START + 2 + WIDTH/2 + WIDTH * row(to));
     }
     ctx.stroke();
     ctx.closePath();
@@ -97,7 +100,7 @@ function drawWord(ctx) {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = '#000';
-    ctx.fillText(word.word.toUpperCase() + ' ' + word.score, 200, 460);
+    ctx.fillText(word.word.toUpperCase() + ' ' + word.score, 225, 485);
     $('#wordNum').text(wordNum + 1);
 }
 
@@ -110,7 +113,8 @@ function col(i) {
 }
 
 function redraw(ctx) {
-    ctx.clearRect(0,0,404,550);
+    ctx.clearRect(START - 2,START - 2, WIDTH*4 + 4,WIDTH*4 + 4);
+    ctx.clearRect(0,450,450,560);
     drawBg(ctx);
     drawWord(ctx);
 }
@@ -119,6 +123,16 @@ function redraw(ctx) {
 $(function() {
     var canvas = document.getElementById('viewer');
     var ctx = canvas.getContext('2d');
+
+    // draw shadow
+    ctx.shadowColor = '#000';
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    ctx.shadowBlur = 15;
+    ctx.lineWidth = 10;
+    ctx.strokeRect(25,25,400,400);
+    ctx.shadowColor = 'rgba(0,0,0,0)';
+    ctx.shadowBlur = 0;
 
     redraw(ctx);
 
@@ -144,7 +158,7 @@ $(function() {
 {% endblock %}
 {% block content %}
 <div class="column" id="center">
-<canvas id="viewer" width="404px" height="550px">
+<canvas id="viewer" width="450px" height="600px">
     Oh no, your browser doesn't support canvas!
 </canvas>
 </div>
