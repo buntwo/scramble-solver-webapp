@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import re
-import sys
 from constants import *
 from operator import attrgetter
 
@@ -13,12 +12,15 @@ class Word:
     def __str__(self):
         return '{0}: {1}'.format(self.word, self.score)
 
-def solve(line):
+def valid(line):
     board_patt = '([a-z][/?]{0,2}){' + str(BOARD_SIZE) + '}$'
-    if not re.match(board_patt, line.strip()):
-        print("Invalid board")
-        return
+    if not re.match(board_patt, line):
+        return False
+    else:
+        return True
 
+# expects a valid, stripped board
+def solve(line):
     letter_patt = r'([a-z])([/?]{0,2})'
     split = re.findall(letter_patt, line)
     # compute multipliers
@@ -99,6 +101,3 @@ def solve(line):
     found.sort(key=attrgetter('score'), reverse=True)
 
     return found
-
-
-print([str(x) for x in solve(sys.argv[1])])

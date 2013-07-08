@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="/static/viewer.css">
+<script type="text/javascript" src="/static/jquery.js"></script>
+<script type="text/javascript">
+var words = {{ words|tojson|safe }};
+var board = {{ board|tojson|safe }};
+board = board.toUpperCase();
+var wordNum = 0; // index into words
+
+// draw grid and letters
+function drawBg(ctx) {
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'square';
+    ctx.beginPath();
+    for (var i = 2; i <= 402; i += 100) {
+        ctx.moveTo(2, i);
+        ctx.lineTo(402, i);
+        ctx.moveTo(i, 2);
+        ctx.lineTo(i, 402);
+
+    }
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.font = '40pt Cantarell';
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    for (i = 0; i < 4; ++i) {
+        for (var j = 0; j < 4; ++j) {
+            ctx.fillText(board[4*i + j], 52 + 100*i, 54 + 100*j);
+        }
+    }
+}
+
+// draw one word and its path and score
+function drawWord(ctx) {
+    word = words[wordNum];
+    path = word.path;
+    // draw behind
+    ctx.globalCompositeOperation = 'destination-over';
+    // green starting square
+    ctx.fillStyle = '#00FF00';
+    ctx.fillRect(4 + 100 * col(path[0]), 4 + 100 * row(path[0]), 96, 96);
+    // red ending square
+    ctx.fillStyle = '#FF0000';
+    ctx.fillRect(4 + 100 * col(path[path.length - 1]), 4 + 100 * row(path[path.length - 1]), 96, 96);
+    // restore gCO
+    ctx.globalCompositeOperation = 'source-over';
+
+
+    // draw path
+    ctx.lineCap = 'round';
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    for (var i = 0; i < path.length - 1; ++i) {
+        from = path[i];
+        to = path[i + 1];
+        ctx.moveTo(52 + 100 * col(from), 52 + 100 * row(from));
+        ctx.lineTo(52 + 100 * col(to), 52 + 100 * row(to));
+    }
+    ctx.stroke();
+    ctx.closePath();
+    
+    // draw word info
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#000';
+    ctx.fillText(word.word.toUpperCase() + ' ' + word.score, 200, 460);
+}
+
+function row(i) {
+    return ~~(i / 4);
+}
+
+function col(i) {
+    return i % 4;
+}
+
+function redraw(ctx) {
+    ctx.clearRect(0,0,404,550);
+    drawBg(ctx);
+    drawWord(ctx);
+}
+
+
+$(function() {
+    var canvas = document.getElementById('viewer');
+    var ctx = canvas.getContext('2d');
+
+    redraw(ctx);
+
+    $(document).keydown(function(e) {
+        if (e.keyCode == 37 && wordNum > 0) {
+            --wordNum;
+            redraw(ctx);
+        } else if ((e.keyCode == 39 || e.keyCode == 32) && wordNum < words.length - 1) {
+            ++wordNum;
+            redraw(ctx);
+        }
+    });
+
+});
+
+</script>
+{% endblock %}
+{% block content %}
+<div class="center">
+<canvas id="viewer" width="404px" height="550px">
+    Oh no, your browser doesn't support canvas!
+</canvas>
+</div>
+
+{% endblock %}

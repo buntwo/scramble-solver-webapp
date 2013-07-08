@@ -1,0 +1,27 @@
+.center_form {
+    text-align: center;
+    width: 300px;
+    left: 50%;
+    margin-left: -150px;
+    position: absolute;
+}
+
+.center_submit {
+    text-align: center;
+    width: 80px;
+    left: 50%;
+    margin-left: -40px;
+    position: absolute;
+    margin-top: 10px;
+}
+
+.instr {
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.container {
+    position: relative;
+    padding: 100px 400px 0 400px;
+    height: 80%;
+}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="/static/input.css">
+{% endblock %}
+{% block content %}
+
+<div class="container">
+
+    <div class="instr">
+        Enter the letters of the board, going left to right, then top to bottom. If the letter is a double letter, type a '/' after it, if it's a triple letter, type a '//' after it. If the letter is a double word, type a '?' after it, if it's a triple word type a '??' after it.
+    </div>
+
+    <div>
+
+        <form action="/solve" method="post">
+            <input class="center_form" name='input' type="text" autofocus required><br>
+            <input class="center_submit" type="submit" value="Solve!">
+        </form>
+
+    </div>
+</div>
+{% endblock %}

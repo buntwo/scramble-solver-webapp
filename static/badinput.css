@@ -1,0 +1,12 @@
+.center {
+    text-align: center;
+    position: relative;
+    font-size: 20px;
+    padding-top: 50px;
+}
+
+.ohno {
+    font-weight: bold;
+    font-size: 30px;
+    padding-bottom: 50px;
+}

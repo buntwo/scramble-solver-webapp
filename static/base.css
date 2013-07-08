@@ -1,0 +1,12 @@
+body {
+    font-family: Cantarell, Ubuntu, sans-serif;
+}
+
+.title {
+    font-size: 30pt;
+    font-variant: small-caps;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 60px;
+    position: relative;
+}

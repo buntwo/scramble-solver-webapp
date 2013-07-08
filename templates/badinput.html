@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Oh no!{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="/static/badinput.css">
+{% endblock %}
+{% block content %}
+<div class="center">
+    <div class="ohno">
+        Oh no!
+    </div>
+Looks like you entered an invalid board! Please try again.
+</div>
+{% endblock %}
