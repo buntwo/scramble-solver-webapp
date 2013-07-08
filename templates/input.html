@@ -89,8 +89,8 @@ $(function() {
 
     drawBoard('', ctx);
 
-    // check sort button
-    $('input:radio[name=sortby]')[0].checked = true;
+    // select sort option
+    $('#sortby').val('scoreD');
 
     $('#board').bind('input', function() {
         var line = $(this).val();
@@ -99,14 +99,14 @@ $(function() {
             drawBoard(goodLine, ctx);
         } else {
             if (boardFull.test(line)) {
-                drawShadow('#0f0', ctx);
+                drawShadow('#009E01', ctx);
             } else {
                 drawShadow('#000', ctx);
             }
             goodLine = line;
             drawBoard(line, ctx);
         }
-    });
+    }).trigger('input');
 });
 
 </script>
@@ -124,11 +124,16 @@ $(function() {
 
         <form action="/view_solutions" method="get" onsubmit="return validate();">
             <input class="center_form" id="board" name='input' type="text" autofocus required><br><br>
-            Sort:<br>
-            <input type="radio" name="sortby" value="scoreD">Descending by score<br>
-            <input type="radio" name="sortby" value="scoreA">Ascending by score<br>
-            <input type="radio" name="sortby" value="lengthD">Descending by length<br>
-            <input type="radio" name="sortby" value="lengthA">Ascending by length<br>
+            Sort:
+            <select name="sortby" id="sortby">
+                <option value="scoreA">Ascending by score</option>
+                <option value="scoreD">Descending by score</option>
+                <option value="lengthA">Ascending by length</option>
+                <option value="lengthD">Descending by length</option>
+                <option value="lexA">Alphabetically</option>
+                <option value="lexD">Reverse alphabetically</option>
+            </select>
+            <br>
             <input class="center_submit" type="submit" value="Solve!">
         </form>
 
