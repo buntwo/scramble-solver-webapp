@@ -5,12 +5,15 @@
 <script type="text/javascript" src="/static/jquery.js"></script>
 <script type="text/javascript">
 var words = {{ words|tojson|safe }};
-var board = {{ board|tojson|safe }};
-board = board.toUpperCase();
+var boardL = {{ board|tojson|safe }};
+var mults = {{ mults|tojson|safe }};
+var LETTER_VALS = {{ lettervals|tojson|safe }};
+board = boardL.toUpperCase();
 var wordNum = 0; // index into words
 
 // draw grid and letters
 function drawBg(ctx) {
+    // grid
     ctx.strokeStyle = '#000';
     ctx.lineWidth = 4;
     ctx.lineCap = 'square';
@@ -25,6 +28,7 @@ function drawBg(ctx) {
     ctx.stroke();
     ctx.closePath();
 
+    // letters
     ctx.font = '40pt Cantarell';
     ctx.fillStyle = '#000';
     ctx.textAlign = 'center';
@@ -34,6 +38,26 @@ function drawBg(ctx) {
             ctx.fillText(board[4*i + j], 52 + 100*j, 54 + 100*i);
         }
     }
+
+    // letter modifiers
+    ctx.font = '12pt Cantarell';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    for (i = 0; i < 4; ++i) {
+        for (var j = 0; j < 4; ++j) {
+            ctx.fillText(mults[4*i + j], 8 + 100*j, 7 + 100*i);
+        }
+    }
+
+    // letter points
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'top';
+    for (i = 0; i < 4; ++i) {
+        for (var j = 0; j < 4; ++j) {
+            ctx.fillText(LETTER_VALS[boardL[4*i + j]], 96 + 100*j, 7 + 100*i);
+        }
+    }
+
 }
 
 // draw one word and its path and score
@@ -51,7 +75,6 @@ function drawWord(ctx) {
     // restore gCO
     ctx.globalCompositeOperation = 'source-over';
 
-
     // draw path
     ctx.lineCap = 'round';
     ctx.lineWidth = 8;
@@ -66,10 +89,12 @@ function drawWord(ctx) {
     ctx.closePath();
     
     // draw word info
+    ctx.font = '40pt Cantarell';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = '#000';
     ctx.fillText(word.word.toUpperCase() + ' ' + word.score, 200, 460);
+    $('#wordNum').text(wordNum + 1);
 }
 
 function row(i) {
@@ -95,11 +120,17 @@ $(function() {
 
     $(document).keydown(function(e) {
         if (e.keyCode == 37 && wordNum > 0) {
-            --wordNum;
-            redraw(ctx);
+        --wordNum;
+        redraw(ctx);
         } else if ((e.keyCode == 39 || e.keyCode == 32) && wordNum < words.length - 1) {
-            ++wordNum;
-            redraw(ctx);
+        ++wordNum;
+        redraw(ctx);
+        } else if (e.keyCode == 48) {
+        wordNum = 0;
+        redraw(ctx);
+        } else if (e.keyCode == 71 && e.shiftKey) {
+        wordNum = words.length - 1;
+        redraw(ctx);
         }
     });
 
@@ -114,6 +145,20 @@ $(function() {
 </canvas>
 </div>
 
-<div class="column" id="left"></div>
-<div class="column" id="right"></div>
+<div class="column" id="left">
+    <div id="controls">
+        <ul>
+            <li>Space/Right: Next word
+            <li>Left: Previous word
+            <li><span class="mono">0</span>: First word
+            <li><span class="mono">G</span>: Last word
+        </ul>
+    </div>
+</div>
+
+<div class="column" id="right">
+    <div id="stats">
+        Word: <span id="wordNum">1</span>/{{ words|length }}
+    </div>
+</div>
 {% endblock %}

@@ -1,7 +1,24 @@
-.stats {
-    float: left;
-    position: absolute;
-    top: 40%;
-    padding-left: 30px;
-    padding-right: 30px;
+.mono {
+    font-family: "DejaVu Sans Mono", monospace;
+}
+
+#stats {
+    padding-left: 0px;
+}
+
+#left {
+    padding: 140px 10px 0 10px;
+}
+
+#right {
+    font-size: 20pt;
+    padding: 140px 10px 0 10px;
+}
+
+#controls {
+    padding-left: 60px;
+}
+
+#controls>ul {
+    list-style-type: none;
 }

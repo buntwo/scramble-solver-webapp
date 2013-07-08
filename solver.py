@@ -19,7 +19,7 @@ def valid(line):
     else:
         return True
 
-# expects a valid, stripped board
+# expects a valid, stripped board, lowercase
 def solve(line):
     letter_patt = r'([a-z])([/?]{0,2})'
     split = re.findall(letter_patt, line)
@@ -49,7 +49,7 @@ def solve(line):
         score = 0
         dw, tw = False, False
         for i in path:
-            score += LETTER_VALS[ord(board[i]) - 97] * (mults[i] // 3 + 1)
+            score += LETTER_VALS[board_[i]] * (mults[i] // 3 + 1)
             if mults[i] == 1:
                 dw = True
             elif mults[i] == 2:
@@ -100,4 +100,4 @@ def solve(line):
     found.sort(key=attrgetter('word'))
     found.sort(key=attrgetter('score'), reverse=True)
 
-    return found
+    return found, board_, mults
