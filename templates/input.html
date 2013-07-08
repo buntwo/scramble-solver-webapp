@@ -33,7 +33,6 @@ function drawBoard(board, ctx) {
     var i = 0;
     var letter;
     while ((letter = boardPartExec.exec(board)) !== null) {
-        console.log(letter);
         // letter
         ctx.font = '40pt Cantarell';
         ctx.fillStyle = '#000';
@@ -90,7 +89,6 @@ $(function() {
     $('#board').bind('input', function() {
         var line = $(this).val().toLowerCase();
         if (!boardPart.test(line)) {
-            console.log('bad');
             drawShadow('#f00', ctx);
             drawBoard(goodLine, ctx);
         } else {
