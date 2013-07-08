@@ -14,7 +14,7 @@ var mults = { '': '', '/': 'DL', '//': 'TL', '?': 'DW', '??': 'TW' };
 
 // draw grid and letters
 function drawBoard(board, ctx) {
-    ctx.clearRect(START - 2,START - 2, WIDTH*4 + 4,WIDTH*4 + 4);
+    ctx.clearRect(START - 2, START - 2, WIDTH*4 + 4, WIDTH*4 + 4);
     // grid
     ctx.strokeStyle = '#000';
     ctx.lineWidth = 4;
@@ -70,7 +70,7 @@ function drawShadow(color, ctx) {
     ctx.shadowOffsetY = 0;
     ctx.shadowBlur = 15;
     ctx.lineWidth = 10;
-    ctx.strokeRect(25,25,400,400);
+    ctx.strokeRect(27,27,396,396);
     ctx.shadowColor = 'rgba(0,0,0,0)';
     ctx.shadowBlur = 0;
     ctx.globalCompositeOperation = 'source-over';
