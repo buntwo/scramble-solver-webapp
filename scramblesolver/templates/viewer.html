@@ -10,10 +10,11 @@ var boardL = {{ board|tojson|safe }};
 var mults = {{ mults|tojson|safe }};
 var LETTER_VALS = {{ lettervals|tojson|safe }};
 var words;
-var index = boardL.indexOf('q');
 board = boardL.toUpperCase().split('');
-if (index != -1) {
-    board[index] = 'Qu';
+for (var i = 0; i < board.length; ++i) {
+    if (board[i] == 'Q') {
+        board[i] = 'Qu';
+    }
 }
 var wordNum = 0; // index into words
 var START = 25;
