@@ -122,14 +122,20 @@ function redraw(ctx) {
 }
 
 $(function() {
+
     function loadData(json) {
         words = json.words;
 
         // update fields
         $('#totalWords').html(words.length);
+        var totPts = 0;
+        $.each(words, function(i, val) {
+            totPts += val.score;
+        });
+        $('#totalPoints').html(totPts);
         // we are visible!
-        $('.column').fadeTo('slow', 1);
-        $('.loading').fadeTo('fast', 0);
+        $('.column').fadeTo(1000, 1);
+        $('.loading').html('Play!').fadeTo(1000, 0);
 
         redraw(ctx);
         $(document).keydown(function(e) {
@@ -182,12 +188,6 @@ $(function() {
 </script>
 {% endblock %}
 {% block content %}
-<div class="column" id="center">
-<canvas id="viewer" width="450px" height="600px">
-    Oh no, your browser doesn't support canvas!
-</canvas>
-</div>
-
 <div class="column" id="left">
     <div id="controls">
         <ul>
@@ -199,9 +199,18 @@ $(function() {
     </div>
 </div>
 
+
+<div class="column" id="center">
+    <canvas id="viewer" width="450px" height="600px">
+        Oh no, your browser doesn't support canvas!
+    </canvas>
+</div>
+
 <div class="column" id="right">
     <div id="stats">
         Word: <span id="wordNum">0</span>/<span id="totalWords">0</span>
+        <br>
+        Total points: <span id="totalPoints"></span>
     </div>
 </div>
 {% endblock %}

@@ -16,25 +16,19 @@
 }
 
 #left {
-    padding: 140px 10px 0 10px;
+    padding: 140px 0 0 0;
 }
 
 #right {
     font-size: 20pt;
-    padding: 140px 10px 0 10px;
+    padding: 140px 0 0 0;
 }
 
 #controls {
-    padding-left: 60px;
+    position: relative;
+    left: 50%;
 }
 
 #controls>ul {
     list-style-type: none;
-}
-
-#stats {
-    padding-left: 0px;
-}
-
-#viewer {
 }

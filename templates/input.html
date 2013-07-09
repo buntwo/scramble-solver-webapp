@@ -99,7 +99,7 @@ $(function() {
             drawBoard(goodLine, ctx);
         } else {
             if (boardFull.test(line)) {
-                drawShadow('#009E01', ctx);
+                drawShadow('#00ff00', ctx);
             } else {
                 drawShadow('#000', ctx);
             }
@@ -114,6 +114,8 @@ $(function() {
 {% endblock %}
 {% block content %}
 
+<div class="column" id="left"></div>
+
 <div class="column" id="center">
 
     <div class="instr">
@@ -123,7 +125,7 @@ $(function() {
     <div>
 
         <form action="/view_solutions" method="get" onsubmit="return validate();">
-            <input class="center_form" id="board" name='input' type="text" autofocus required><br><br>
+            <input class="center_form" id="board" name='input' type="text" autofocus required><br>
             Sort:
             <select name="sortby" id="sortby">
                 <option value="scoreA">Ascending by score</option>
@@ -142,4 +144,7 @@ $(function() {
         </canvas>
     </div>
 </div>
+
+<div class="column" id="right"></div>
+
 {% endblock %}

@@ -128,6 +128,10 @@ def solve(line, sort):
                 elt = max(words, key=lambda x: len(x.word))
             elif sort == 'lengthA':
                 elt = min(words, key=lambda x: len(x.word))
+            elif sort == 'lexD':
+                elt = max(words, key=attrgetter('word'))
+            elif sort == 'lexA':
+                elt = min(words, key=attrgetter('word'))
             found.append(elt)
 
     if sort == 'scoreD':
@@ -138,5 +142,9 @@ def solve(line, sort):
         found.sort(key=lambda x: len(x.word), reverse=True)
     elif sort == 'lengthA':
         found.sort(key=lambda x: len(x.word))
+    elif sort == 'lexD':
+        found.sort(key=attrgetter('word'), reverse=True)
+    elif sort == 'lexA':
+        found.sort(key=attrgetter('word'))
 
     return found
