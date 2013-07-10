@@ -35,13 +35,13 @@ function drawBoard(board, ctx) {
     var letter;
     while ((letter = boardPartExec.exec(board)) !== null) {
         // letter
-        ctx.font = '40pt Cantarell';
+        ctx.font = '40pt Cantarell,Ubuntu,Arial';
         ctx.fillStyle = '#000';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(letter[1] == 'q' ? 'Qu' : letter[1].toUpperCase(), WIDTH/2 + START +  + WIDTH*col(i), WIDTH/2 + START + WIDTH*row(i));
         // modifier
-        ctx.font = '12pt Cantarell';
+        ctx.font = '12pt Cantarell,Ubuntu,Arial';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'top';
         ctx.fillText(mults[letter[2]], 6 + START + WIDTH*col(i), 5 + START + WIDTH*row(i));
