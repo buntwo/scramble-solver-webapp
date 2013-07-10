@@ -74,17 +74,6 @@ function drawBg(ctx) {
 function drawWord(ctx) {
     word = words[wordNum];
     path = word.path;
-    // draw behind
-    ctx.globalCompositeOperation = 'destination-over';
-    // green starting square
-    ctx.fillStyle = '#00FF00';
-    ctx.fillRect(START + 2 + WIDTH * col(path[0]), START + 2 + WIDTH * row(path[0]), WIDTH - 4, WIDTH - 4);
-    // red ending square
-    ctx.fillStyle = '#FF0000';
-    ctx.fillRect(START + 2 + WIDTH * col(path[path.length - 1]), START + 2 + WIDTH * row(path[path.length - 1]), WIDTH - 4, WIDTH - 4);
-    // restore gCO
-    ctx.globalCompositeOperation = 'source-over';
-
     // draw path
     ctx.lineCap = 'round';
     ctx.lineWidth = 8;
@@ -98,6 +87,22 @@ function drawWord(ctx) {
     ctx.stroke();
     ctx.closePath();
     
+    // draw behind
+    ctx.globalCompositeOperation = 'destination-over';
+    // green starting square
+    ctx.fillStyle = '#00FF00';
+    ctx.fillRect(START + 2 + WIDTH * col(path[0]), START + 2 + WIDTH * row(path[0]), WIDTH - 4, WIDTH - 4);
+    // red ending square
+    ctx.fillStyle = '#FF0000';
+    ctx.fillRect(START + 2 + WIDTH * col(path[path.length - 1]), START + 2 + WIDTH * row(path[path.length - 1]), WIDTH - 4, WIDTH - 4);
+    // squares in the middle
+    ctx.fillStyle = '#bbb';
+    for (var i = 1; i < path.length - 1; ++i) {
+        ctx.fillRect(START + 2 + WIDTH * col(path[i]), START + 2 + WIDTH * row(path[i]), WIDTH - 4, WIDTH - 4);
+    }
+    // restore gCO
+    ctx.globalCompositeOperation = 'source-over';
+
     // draw word info
     ctx.font = '40pt Cantarell,Ubuntu,Arial';
     ctx.textAlign = 'center';
@@ -192,6 +197,7 @@ $(function() {
 <div class="column" id="left">
     <div id="controls">
         <ul>
+            <li><h2>Controls</h2>
             <li>Space/Right: Next word
             <li>Left: Previous word
             <li><span class="mono">0</span>: First word
