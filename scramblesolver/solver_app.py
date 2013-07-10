@@ -1,13 +1,15 @@
 #!/usr/bin/python
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 import solver
 import re
+import os
 
 app = Flask(__name__)
 
 @app.route('/')
 def input():
     return render_template('input.html', lettervals=solver.LETTER_VALS)
+
 
 @app.route('/view_solutions')
 def view_solns():
@@ -37,8 +39,11 @@ def solve():
     data = { 'words': [ x.__dict__ for x in words], }
 
     return jsonify(data)
-    #return render_template('viewer.html', words=[ x.__dict__ for x in [solver.Word("apple", 50, [1,3,14]), solver.Word("banana", 10, [1,5,10,15,2])]], board=''.join(board), mults=['','','','','','','','','','','','','','','','DL'], lettervals=solver.LETTER_VALS)
 
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 if __name__ == "__main__":
