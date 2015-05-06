@@ -73,23 +73,21 @@ def solve(line, sort):
         return ''.join(word)
     def get_score(path):
         score = 0
-        dw, tw = False, False
+        word_mult = [0,0]; # first is number of DW, 2nd is number of TW
         for i in path:
             score += LETTER_VALS[board[i]] * (mults[i] // 3 + 1)
             if mults[i] == 1:
-                dw = True
+                word_mult[0] += 1;
             elif mults[i] == 2:
-                tw = True
+                word_mult[1] += 1;
 
         # 2 letter words have score 1
         if len(path) == 2:
             score = 1
 
         # word multipliers
-        if tw:
-            score *= 3
-        elif dw:
-            score *= 2
+        score *= 3 ** word_mult[1];
+        score *= 2 ** word_mult[0];
 
         # length bonus
         score += LENGTH_BONUS[len(path)]

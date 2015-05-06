@@ -17,9 +17,14 @@ for (var i = 0; i < board.length; ++i) {
     }
 }
 var wordNum = 0; // index into words
+var skipped = {}; // words derived from a previous word that can be skipped, eg, remove s, d, ed, etc
 var START = 25;
 var END = 425;
 var WIDTH = 100;
+
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
 
 // draw grid and letters
 function drawBg(ctx) {
@@ -144,19 +149,42 @@ $(function() {
         $('.loading').html('Play!').fadeTo(1000, 0);
 
         redraw(ctx);
+        // word 0 is special
+        curWord = words[wordNum].word;
+        if (curWord.endsWith('s')) {
+            skipped[curWord.slice(0,-1)] = 0;
+        } else if (curWord.endsWith('ed')) {
+            skipped[curWord.slice(0,-2)] = 0;
+            skipped[curWord.slice(0,-1)] = 0;
+        } else if (curWord.endsWith('d')) {
+            skipped[curWord.slice(0,-1)] = 0;
+        }
         $(document).keydown(function(e) {
-            if (e.keyCode == 37 && wordNum > 0) {
-            --wordNum;
-            redraw(ctx);
-            } else if ((e.keyCode == 39 || e.keyCode == 32) && wordNum < words.length - 1) {
-            ++wordNum;
-            redraw(ctx);
-            } else if (e.keyCode == 48) {
-            wordNum = 0;
-            redraw(ctx);
-            } else if (e.keyCode == 71 && e.shiftKey) {
-            wordNum = words.length - 1;
-            redraw(ctx);
+            if (e.keyCode == 37 && wordNum > 0) { // left arrow
+                --wordNum;
+                redraw(ctx);
+            } else if ((e.keyCode == 39 || e.keyCode == 32) && wordNum < words.length - 1) { // right arrow, space
+                ++wordNum;
+                while (words[wordNum].word in skipped) {
+                    console.log('skipped ' + words[wordNum].word);
+                    ++wordNum;
+                }
+                curWord = words[wordNum].word;
+                if (curWord.endsWith('s')) {
+                    skipped[curWord.slice(0,-1)] = 0;
+                } else if (curWord.endsWith('ed')) {
+                    skipped[curWord.slice(0,-2)] = 0;
+                    skipped[curWord.slice(0,-1)] = 0;
+                } else if (curWord.endsWith('d')) {
+                    skipped[curWord.slice(0,-1)] = 0;
+                }
+                redraw(ctx);
+            } else if (e.keyCode == 48) { // 0
+                wordNum = 0;
+                redraw(ctx);
+            } else if (e.keyCode == 71 && e.shiftKey) { // G
+                wordNum = words.length - 1;
+                redraw(ctx);
             }
         });
     }
